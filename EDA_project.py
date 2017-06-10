@@ -23,3 +23,5 @@ t60_part2 = dd.read_csv('./data/NHIS_OPEN_T60_2015_part2.CSV')
 t60 = t60_part1.append(t60_part2)
 
 
+# Example
+sns.countplot(gj.HEIGHT.compute()) # Height Distribution
