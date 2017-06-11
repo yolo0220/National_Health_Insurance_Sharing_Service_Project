@@ -49,7 +49,7 @@ sns.barplot(x="MAIN_SICK", y="EDEC_SBRDN_AMT", data=t20_top10_sick,
             label="본인 부담금", color="r")
 plt.legend()
 plt.xlabel("주상병코드")
-plt.ylabel("보험금")
+plt.ylabel("평균 보험금")
 plt.show()
 
 # MAIN_SICK, SUB_SICK / HEATMAP
@@ -63,8 +63,8 @@ plt.figure()
 main_sub_sick_size = t20_main_sub_sick.pivot_table(index="MAIN_SICK",
                                                    columns="SUB_SICK",
                                                    aggfunc="size")
-sns.heatmap(main_sub_sick_size, annot=True, fmt='g')
-plt.xticks(rotation=90)
+sns.heatmap(main_sub_sick_size, annot=True, fmt="d")
+plt.xticks(rotation=45)
 plt.title("주상병-부상병 관계")
 plt.xlabel("부상병코드")
 plt.ylabel("주상병코드")
