@@ -13,6 +13,9 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import dask.dataframe as dd
 from dask.diagnostics import ProgressBar
+
+# Settings
+sns.set(font="NanumGothic")
 pbar = ProgressBar()
 pbar.register()
 
@@ -24,13 +27,23 @@ t60_part2 = dd.read_csv('./data/NHIS_OPEN_T60_2015_part2.CSV')
 t60 = t60_part1.append(t60_part2)  # Prescription Data
 
 
-# Example
-sns.countplot(gj.HEIGHT.compute())  # Height Distribution
-
 # Count TOP 10 Main Sick
 main_sick_count = t20.MAIN_SICK.value_counts().compute()
 top10_main_sick = main_sick_count[:10]
 
-# t20 table confined to top 10 main sick:
+# t20 table confined to top 10 main sick
 t20_top10_sick = t20[t20.MAIN_SICK.isin(top10_main_sick.index)].compute()
+
+## MAIN_SICK, SEX / COUNT
+plt.figure()
 sns.countplot(x="MAIN_SICK", hue="SEX", data=t20_top10_sick)
+plt.legend(["Male", "Female"])
+plt.show()
+
+## MAIN_SICK / Insured CLAIM
+f = plt.figure()
+sns.barplot(x="MAIN_SICK", y="EDEC_TRAMT", data=t20_top10_sick,
+            label="보험금 총액")
+sns.barplot(x="MAIN_SICK", y="EDEC_SBRDN_AMT", data=t20_top10_sick,
+            label="본인 부담금")
+plt.show()
